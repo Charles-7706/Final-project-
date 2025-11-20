@@ -26,4 +26,24 @@ router.get('/', async (req, res) => {
     }
 });
 
+//get institution by id
+router.get('/:id', async (req, res) => {
+    try {
+        const institution = await Institution.findById(req.params.id);
+        res.status(200).json(institution);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+//get institution by name
+router.get('/name/:name', async (req, res) => {
+    try {
+        const institution = await Institution.findOne({ name: req.params.name });
+        res.status(200).json(institution);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
 module.exports = router;
