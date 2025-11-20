@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Hostel = require('./models/hostel'); // adjust path if needed
 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://mern-stack:Commitment16@cluster0.e3wugbl.mongodb.net/hostelhub?retryWrites=true&w=majority&appName=Cluster0", {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
