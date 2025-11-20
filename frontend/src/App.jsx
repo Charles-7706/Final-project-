@@ -15,8 +15,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Layout>
-          <CampusPage />
+        <Route path='/hostels' element={<Layout>
           <Hostels/>
         </Layout>}/>
         <Route path='/hostel/:id' element={<Layout>
@@ -37,6 +36,10 @@ function App() {
 
         <Route path='/add' element={<Layout>
           <AddHostel/>
+        </Layout>}/>
+
+        <Route path='/' element={<Layout>
+          <CampusPage />
         </Layout>}/>
       </Routes>
     </Router>

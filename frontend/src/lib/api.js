@@ -1,3 +1,5 @@
+import AddHostel from "@/components/addHostel";
+
 const API = import.meta.env.VITE_API || "http://localhost:5000";
 
 // Helper function for fetch requests
@@ -51,6 +53,55 @@ export const api = {
       },
     hostelbyId: async (id) => {
         return await request(`${API}/api/hostels/${id}`, {
+            method: "GET",
+        });
+      },
+    Addhostel: async (data) => {
+        return await request(`${API}/api/hostels`, {
+            method: "POST",
+            body: JSON.stringify(data),
+        });
+      },
+    updateHostel: async (id, data) => {
+        return await request(`${API}/api/hostels/${id}`, {
+            method: "PUT",
+            body: JSON.stringify(data),
+        });
+      },
+    deleteHostel: async (id) => {
+        return await request(`${API}/api/hostels/${id}`, {
+            method: "DELETE",
+        });
+      },
+      institutions: async (data) => {
+        return await request(`${API}/api/institutions`, {
+            method: "GET",
+        });
+      },
+      institutionbyId: async (id) => {
+        return await request(`${API}/api/institutions/${id}`, {
+            method: "GET",
+        });
+      },
+    Addinstitution: async (data) => {
+        return await request(`${API}/api/institutions`, {
+            method: "POST",
+            body: JSON.stringify(data),
+        });
+      },
+    updateInstitution: async (id, data) => {
+        return await request(`${API}/api/institutions/${id}`, {
+            method: "PUT",
+            body: JSON.stringify(data),
+        });
+      },
+    deleteInstitution: async (id) => {
+        return await request(`${API}/api/institutions/${id}`, {
+            method: "DELETE",
+        });
+      },
+      institutionbyname: async (name) => {
+        return await request(`${API}/api/institutions/name/${name}`, {
             method: "GET",
         });
       }
