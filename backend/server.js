@@ -14,9 +14,10 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: ["http://localhost:5173", "https://final-project-one-sand.vercel.app"],
+  origin: ["http://localhost:5173", "https://final-project-psi-five-50.vercel.app"],
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  credentials: true
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization", "token"]
 }));
 
 app.use(express.json());
