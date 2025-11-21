@@ -21,6 +21,11 @@ app.use(cors({
 
 app.use(express.json());
 
+// Test route
+app.get('/', (req, res) => {
+  res.json({ message: 'HostelHub API is running!' });
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/hostels', hostelRoutes);
