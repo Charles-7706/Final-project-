@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useState } from "react";
-import api from "@/lib/api";
+import {api} from "@/lib/api";
 
 
 export function SignupForm({
