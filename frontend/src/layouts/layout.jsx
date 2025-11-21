@@ -1,12 +1,14 @@
 import Header from "../components/Header.jsx";
-import Hero from "../components/Hero.jsx";
 import Footer from "../components/Footer.jsx";
+import RoleBasedNav from "../components/RoleBasedNav.jsx";
 
 function Layout({children}) {
-    return <div className="flex flex-col min-h-screen">
+    return <div className="flex flex-col min-h-screen bg-gray-50">
         <Header />
-        <Hero />
-        <div className="container mx-auto py-10 flex-1">{children}</div>
+        <RoleBasedNav />
+        <main className="flex-1 container mx-auto px-6 py-8">
+            {children}
+        </main>
         <Footer />
     </div>;
 }

@@ -104,6 +104,44 @@ export const api = {
         return await request(`${API}/api/institutions/name/${name}`, {
             method: "GET",
         });
-      }
+      },
+      me: async () => {
+        return await request(`${API}/api/auth/me`, {
+            method: "GET",
+        });
+      },
+      createbooking: async (data) => {
+        return await request(`${API}/api/bookings`, {
+            method: "POST",
+            body: JSON.stringify(data),
+        });
+      },
+      updateBookingStatus: async (id, data) => {
+        return await request(`${API}/api/bookings/${id}/status`, {
+            method: "PATCH",
+            body: JSON.stringify(data),
+        });
+      },
+      bookings: async (data) => {
+        return await request(`${API}/api/bookings`, {
+            method: "GET",
+        });
+      },
+      bookingbyId: async (id) => {
+        return await request(`${API}/api/bookings/${id}`, {
+            method: "GET",
+        });
+      },
+      updatebooking: async (id, data) => {
+        return await request(`${API}/api/bookings/${id}`, {
+            method: "PUT",
+            body: JSON.stringify(data),
+        });
+      },
+      deletebooking: async (id) => {
+        return await request(`${API}/api/bookings/${id}`, {
+            method: "DELETE",
+        });
+      },
   }
 export default api;

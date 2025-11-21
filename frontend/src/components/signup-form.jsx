@@ -26,6 +26,7 @@ const [form, setForm] = useState({
   name: "",
   confirmPassword: "",
   phone: "",
+  role: "student",
 });
 const onSubmit = async (e) => {
   e.preventDefault();
@@ -34,20 +35,24 @@ const onSubmit = async (e) => {
     return;
   }
   try {
-    await api.register(form);
+    const data = await api.register(form);
+    localStorage.setItem("token", data.token);
     setForm({
       email: "",
       password: "",
       name: "",
       confirmPassword: "",
       phone: "",
+      role: "student",
     });
-    const data = await api.register(form);
-    localStorage.setItem("token", data.token);
-    alert("Signup successful! Please log in.");
+    alert("Signup successful!");
   } catch (error) {
     console.error("Signup error:", error);
-    alert("An error occurred during signup. Please try again.");
+    if (error.message.includes("E11000") && error.message.includes("email")) {
+      alert("This email is already registered. Please use a different email or try logging in.");
+    } else {
+      alert("An error occurred during signup. Please try again.");
+    }
   }
 }
 
@@ -106,6 +111,32 @@ const onSubmit = async (e) => {
               onChange={(e) => setForm({...form, confirmPassword: e.target.value})}
               />
               <FieldDescription>Please confirm your password.</FieldDescription>
+            </Field>
+            <Field>
+              <FieldLabel>Role</FieldLabel>
+              <div className="flex gap-4">
+                <label className="flex items-center gap-2">
+                  <input 
+                    type="radio" 
+                    name="role" 
+                    value="student" 
+                    checked={form.role === "student"}
+                    onChange={(e) => setForm({...form, role: e.target.value})}
+                  />
+                  Student
+                </label>
+                <label className="flex items-center gap-2">
+                  <input 
+                    type="radio" 
+                    name="role" 
+                    value="owner" 
+                    checked={form.role === "owner"}
+                    onChange={(e) => setForm({...form, role: e.target.value})}
+                  />
+                  Hostel Owner
+                </label>
+              </div>
+              <FieldDescription>Choose your account type.</FieldDescription>
             </Field>
             <FieldGroup>
               <Field>

@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 const HostelCard = ({ hostel }) => {
   const navigate = useNavigate();
-  console.log(hostel)
 
   return (
     <Card 
@@ -62,7 +61,7 @@ const HostelCard = ({ hostel }) => {
         <div className="flex justify-between items-center pt-4 border-t border-border">
           <div>
             <span className="text-3xl font-bold text-primary">KSh {hostel?.priceFrom?.toLocaleString()}</span>
-            <span className="text-sm text-muted-foreground ml-1">/month</span>
+            <span className="text-sm text-muted-foreground ml-1">/semester</span>
           </div>
           <Badge variant="outline" className="border-primary text-primary font-semibold px-3 py-1">
             {hostel.gender}

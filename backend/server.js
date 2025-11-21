@@ -3,6 +3,7 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
 const hostelRoutes = require('./routes/hostelRoutes');
 const institutionRoutes = require('./routes/instituitionRotes');
+const bookingRoutes = require('./routes/bookingsRoute');
 const cors = require('cors');
 require('dotenv').config();
 
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/hostels', hostelRoutes);
 app.use('/api/institutions', institutionRoutes);
+app.use('/api/bookings', bookingRoutes);
 
 
 app.listen(PORT, () => {

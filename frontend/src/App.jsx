@@ -6,6 +6,8 @@ import CampusPage from './components/campus.jsx';
 import Hostels  from './components/Hostels.jsx';
 import HostelDetail from './components/HostelDetail.jsx'
 import AddHostel from './components/addHostel.jsx';
+import BookingPage from './components/BookingPage.jsx';
+import BookingsList from './components/BookingsList.jsx';
 
 import Layout from './layouts/layout.jsx'
 
@@ -40,6 +42,14 @@ function App() {
 
         <Route path='/' element={<Layout>
           <CampusPage />
+        </Layout>}/>
+
+        <Route path='/book' element={<Layout>
+          <BookingPage />
+        </Layout>}/>
+        
+        <Route path='/my-bookings' element={<Layout>
+          <BookingsList />
         </Layout>}/>
       </Routes>
     </Router>

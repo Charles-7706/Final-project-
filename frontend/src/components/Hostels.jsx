@@ -12,7 +12,10 @@ function Hostels() {
     const fetchHostels = async () => {
       try {
         const data = await api.hostels();
-        setHostels(data);
+
+        const filteredHostels = data.filter((hostel)=> hostel.institutionId.name === localStorage.getItem("institution"));
+        setHostels(filteredHostels);
+
       } catch(err) {
         setError(err.message || "Failed to load hoslels")
       }
@@ -24,19 +27,27 @@ function Hostels() {
 
   }, [])
 
-  if (loading) return <p>loading...</p>;
-  if (error) return <p>Error: {error}</p>
+  if (loading) return <div className="flex justify-center py-12"><div className="text-lg">Loading hostels...</div></div>;
+  if (error) return <div className="text-center py-12 text-red-600">Error: {error}</div>;
 
   return(
     <div>
-      <p>Hostels</p>
-      <div>
-        <ul>
-          {hostels.map((hostel)=>(
-            <HostelCard key={hostel._id} hostel={hostel} />
-          ))}
-        </ul>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Available Hostels</h1>
+        <p className="text-gray-600">Find the perfect accommodation for your stay</p>
       </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {hostels.map((hostel)=>(
+          <HostelCard key={hostel._id} hostel={hostel} />
+        ))}
+      </div>
+      
+      {hostels.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-gray-500 text-lg">No hostels found for this campus</p>
+        </div>
+      )}
     </div>
   )
 }

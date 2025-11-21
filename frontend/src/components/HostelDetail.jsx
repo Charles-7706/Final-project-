@@ -234,9 +234,13 @@ const navigate = useNavigate();
                 </div>
 
                 <div className="space-y-2">
-                  <Button className="w-full bg-accent hover:bg-accent/90 h-12" size="lg">
+                  <Button 
+                    className="w-full bg-black hover:bg-black-600/90 h-12" 
+                    size="lg"
+                    onClick={() => navigate('/book', { state: { hostelId: hostel._id, amount: hostel.priceFrom } })}
+                  >
                     <Calendar className="h-4 w-4 mr-2" />
-                    Reserve Bed
+                    Book Now
                   </Button>
                   <Button variant="outline" className="w-full h-12" size="lg">
                     <Phone className="h-4 w-4 mr-2" />

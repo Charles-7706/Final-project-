@@ -5,7 +5,7 @@ const Hostel = require('../models/hostel.js');
 // Create a new hostel
 router.post('/', verify, async (req, res) => {
     try {
-        if (req.user.role !== 'admin') {
+        if (req.user.role !== 'admin' && req.user.role !== 'owner') {
             return res.status(403).json({ message: 'Access denied' });
         }
         const newHostel = new Hostel({
@@ -22,11 +22,11 @@ router.post('/', verify, async (req, res) => {
 
 //all hostels
 router.get('/', verify, async (req, res) => {
-    if (req.user.role !== 'admin' && req.user.role !== 'owner') {
-        return res.status(403).json({ message: 'Access denied' });
-    }
+    // if (req.user.role !== 'admin' && req.user.role !== 'owner' ) {
+    //     return res.status(403).json({ message: 'Access denied' });
+    // }
     try {
-        const hostels = await Hostel.find();
+        const hostels = await Hostel.find().populate("institutionId");
         res.status(200).json(hostels);
     } catch (err) {
         res.status(500).json(err);
@@ -35,11 +35,9 @@ router.get('/', verify, async (req, res) => {
 
 //one hostel
 router.get('/:id', verify, async (req, res) => {
-    if (req.user.role !== 'admin' && req.user.role !== 'owner') {
-        return res.status(403).json({ message: 'Access denied' });
-    }
+
     try {
-        const hostel = await Hostel.findById(req.params.id).populate("landlordId", "name phone email");
+        const hostel = await Hostel.findById(req.params.id).populate("landlordId", "name phone email").populate("institutionId");
         res.status(200).json(hostel);
     } catch (err) {
         res.status(500).json(err);
