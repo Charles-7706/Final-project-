@@ -4,7 +4,7 @@ A full-stack web application for managing university hostel bookings in Kenya. S
 
 ## 🌐 Live Demo
 
-**Frontend**: [(https://final-project-one-sand.vercel.app/)]
+**Frontend**: [(https://final-project-psi-five-50.vercel.app/ )]
 
 > **Note**: Replace the placeholder links above with actual deployment URLs after deploying to production.
 
