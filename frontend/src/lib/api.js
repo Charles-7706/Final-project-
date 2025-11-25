@@ -1,6 +1,7 @@
 
 
 const API = import.meta.env.VITE_API || "http://localhost:5000";
+// const API = "http://localhost:5000";
 console.log('API URL:', API);
 
 // Helper function for fetch requests

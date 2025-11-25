@@ -1,7 +1,7 @@
 import { api } from "@/lib/api";
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader } from './ui/card.jsx';
 import HostelCard from "./ui/HostelCard.jsx";
+
 
 function Hostels() {
   const [hostels, setHostels] = useState([]);
@@ -27,6 +27,10 @@ function Hostels() {
 
   }, [])
 
+  const handleHostelDelete = (deletedId) => {
+    setHostels(hostels.filter(h => h._id !== deletedId));
+  };
+
   if (loading) return <div className="flex justify-center py-12"><div className="text-lg">Loading hostels...</div></div>;
   if (error) return <div className="text-center py-12 text-red-600">Error: {error}</div>;
 
@@ -39,7 +43,7 @@ function Hostels() {
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {hostels.map((hostel)=>(
-          <HostelCard key={hostel._id} hostel={hostel} />
+          <HostelCard key={hostel._id} hostel={hostel} onDelete={handleHostelDelete} />
         ))}
       </div>
       

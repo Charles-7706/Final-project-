@@ -48,7 +48,6 @@ const navigate = useNavigate();
       </div>
     );
   }
-  console.log(hostel);
   
   if (error) {
     return (

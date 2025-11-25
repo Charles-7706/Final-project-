@@ -1,10 +1,30 @@
-import { MapPin, Star, Users } from 'lucide-react';
+import { MapPin, Star, Users, Trash2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { getUserFromToken } from '@/lib/auth';
+import { api } from '@/lib/api';
 
-const HostelCard = ({ hostel }) => {
+
+const HostelCard = ({ hostel, onDelete }) => {
   const navigate = useNavigate();
+  const user = getUserFromToken();
+  const canDelete = user && (user.role === 'owner' || user.role === 'admin');
+
+  const handleDelete = async (e) => {
+    e.stopPropagation();
+    if (window.confirm('Are you sure you want to delete this hostel?')) {
+      try {
+        await api.deleteHostel(hostel._id);
+        alert('Hostel deleted successfully!');
+        if (onDelete) onDelete(hostel._id);
+      } catch (error) {
+        console.error('Error deleting hostel:', error);
+        alert('Failed to delete hostel');
+      }
+    }
+  };
 
   return (
     <Card 
@@ -14,18 +34,25 @@ const HostelCard = ({ hostel }) => {
     >
       <div className="relative h-56 overflow-hidden">
         <img 
-          src={hostel.images} 
+          src={hostel.images[0]} 
           alt={hostel.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        {/* <Badge className="absolute top-4 right-4 bg-primary text-primary-foreground shadow-lg">
-          {hostel.vacancies} beds left
-        </Badge> */}
+        {canDelete && (
+          <Button
+            variant="destructive"
+            size="sm"
+            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+            onClick={handleDelete}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        )}
       </div>
       <CardContent className="p-6">
         <div className="flex justify-between items-start mb-3">
-          <h3 className="font-bold text-xl text-foreground group-hover:text-primary transition-colors">{hostel.name}</h3>
+          <h3 className="font-bold text-xl text-foreground group-hover:text-primary transition-colors">{(hostel.name).toUpperCase()}</h3>
           <div className="flex items-center gap-1 bg-accent/10 px-2 py-1 rounded-lg">
             <Star className="h-4 w-4 fill-primary text-primary" />
             <span className="font-bold text-sm">{hostel.rating}</span>

@@ -7,19 +7,39 @@ import { Button } from "./ui/button";
 import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group";
 import {api} from '@/lib/api';
 
+
+
 function AddHostel() {
     const name = localStorage.getItem("institution");
     const [hostelData, setHostelData] = useState({
-        institutionId: "691c6404edbacddb8a4ab319",
+        institutionId: "",
         name: '',
         description: '',
         gender: '',
         priceFrom: '',
         distance: '',
         amenities: "",
-        pictures: "",
+        images: [],
         location: "",
     });
+    const handleFiles = async (e) => {
+        const files = e.target.files;
+        const uploadedUrls = [];
+        for (let i = 0; i < files.length; i++) {
+            const formData = new FormData();
+            formData.append('file', files[i]);
+            formData.append('upload_preset', 'hostel_hub');
+            formData.append('cloud_name', 'dfo9c6e3n');
+            const response = await fetch(' https://api.cloudinary.com/v1_1/dfo9c6e3n/image/upload', {
+                method: 'POST',
+                body: formData,
+            });
+            const data = await response.json();
+            uploadedUrls.push(data.secure_url);
+            
+        }
+        setHostelData({...hostelData, images: uploadedUrls});
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         const inst = await api.institutionbyname(name);
@@ -29,21 +49,11 @@ function AddHostel() {
                 amenities: hostelData.amenities.split(",").map(a => a.trim()),
                 priceFrom: Number(hostelData.priceFrom),
             };
-        console.log(payload);
+            console.log(payload);
         try{
             await api.Addhostel(payload);
             alert('Hostel added successfully!');
-            // Reset form after submission
-            // setHostelData({
-            //     name: '',
-            //     description: '',
-            //     gender: '',
-            //     priceFrom: '',
-            //     distance: '',
-            //     amenities: [],
-            //     pictures: [],
-            //     location: {},
-            // });
+            
         } catch (error) {
             console.error("Error adding hostel:", error);
             alert('Failed to add hostel. Please try again.');
@@ -98,8 +108,9 @@ function AddHostel() {
                 onChange={(e)=> setHostelData({...hostelData, amenities: e.target.value})}
                 />
                 <Label htmlFor="picture">Pictures</Label>
-                <Input id="picture" type="file" 
-                onChange={(e)=> setHostelData({...hostelData, pictures: e.target.files})}/>
+                <Input id="picture" type="file" multiple accept="image/*"
+                onChange={handleFiles}/>
+
                 <Label>Location</Label>
                 <Input type="text" placeholder="Location" 
                 value={hostelData.location}
